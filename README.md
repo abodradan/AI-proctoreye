@@ -33,10 +33,12 @@ AI-proctoreye/
 │
 ├── api/  # Core system and API
 |   ├── databse/
-|   ├── interface/
+|   ├── routes/
 |   ├── services/
+|   ├── services_v2/
 |   ├── main.py
 |   └── requirements.txt
+|   └── README.md
 │
 ├── frontend/  # React-based UI
 |   ├── src/
