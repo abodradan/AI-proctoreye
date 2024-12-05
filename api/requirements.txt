@@ -8,6 +8,6 @@ opencv_python_headless==4.10.0.84
 Pillow==11.0.0
 uvicorn==0.32.0
 
-deepface
 tensorflow==2.5.0
 tf-keras
+deepface
