@@ -52,3 +52,6 @@ api/images/
 frontend/images/
 
 readformy.md
+
+# Ignore SQLite database file
+*.db
