@@ -1,4 +1,8 @@
-import mysql.connector
+import sqlite3
+from students import Student
+from exam import Exam
+from students import Student
+from room_assignment import RoomAssignment
 
 class DatabaseManager:
     _instance = None
@@ -9,49 +13,57 @@ class DatabaseManager:
             cls._instance._connection = None
         return cls._instance
 
-    def __init__(self, host='localhost', user='root', password='', database='exam_proctoring'):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
+    def __init__(self, db_name='exam_proctoring.db'):
+        self.db_name = db_name
+        self.student_db = Student(db_name)
+        self.exam_db = Exam(db_name)
+        self.room_assignment_db = RoomAssignment(db_name)
 
     def connect(self):
-        if self._connection is None or not self._connection.is_connected():
+        if self._connection is None:
             try:
-                self._connection = mysql.connector.connect(
-                    host=self.host,
-                    user=self.user,
-                    password=self.password
-                )
-                self._create_database_if_not_exists()
-                self._connection.database = self.database
-                self._create_table_if_not_exists()
+                # SQLite does not require a host or user/password, just the db file.
+                self._connection = sqlite3.connect(self.db_name)
                 print("Database connection successful")
-            except mysql.connector.Error as err:
+            except sqlite3.Error as err:
                 print(f"Database connection error: {err}")
                 self._connection = None
         return self._connection
 
-    def _create_database_if_not_exists(self):
-        cursor = self._connection.cursor()
-        cursor.execute(f"CREATE DATABASE IF NOT EXISTS {self.database}")
-        cursor.close()
-
-    def _create_table_if_not_exists(self):
-        cursor = self._connection.cursor()
-        cursor.execute(f"""
-            CREATE TABLE IF NOT EXISTS students (
-                student_id INT AUTO_INCREMENT PRIMARY KEY,
-                registration_number VARCHAR(255) NOT NULL,
-                name VARCHAR(255) NOT NULL,
-                image_path VARCHAR(255),
-                face_embedding BLOB
-            )
-        """)
-        cursor.close()
+    def create_tables(self):
+        # Create all tables by calling the create_table method for each class.
+        self.student_db.create_table()
+        self.exam_db.create_table()
+        self.room_assignment_db.create_table()
+        print("All tables created if not exist")
 
     def close(self):
-        if self._connection is not None and self._connection.is_connected():
+        if self._connection:
             self._connection.close()
             self._connection = None
             print("Database connection closed")
+
+# Example usage
+if __name__ == '__main__':
+    db_manager = DatabaseManager()
+    db_manager.connect()
+    db_manager.create_tables()
+
+    # Insert some data into the students table
+    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160028", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160029", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160030", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160031", College="Computer Science", Level="4", Specialization="AI", ImagePath="/images/ahmed.jpg")
+
+    # Fetch all students
+    students = db_manager.student_db.all()
+    print(students)
+
+    # Insert an exam
+    db_manager.exam_db.create(Date="2024-12-05", TimeSlot="10:00 - 12:00", Period="First", Level="2", Specialization="AI", Duration="02:00:00", StudentCount=50)
+
+    # Fetch all exams
+    exams = db_manager.exam_db.all()
+    print(exams)
+
+    db_manager.close()
