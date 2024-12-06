@@ -49,17 +49,21 @@ class DatabaseManager:
 #     db_manager.create_tables()
 
 #     # Insert some data into the students table
-#     db_manager.student_db.create(StudentName="Ahmed", Number="22160028", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
-#     db_manager.student_db.create(StudentName="Ahmed", Number="22160029", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
-#     db_manager.student_db.create(StudentName="Ahmed", Number="22160030", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
-#     db_manager.student_db.create(StudentName="Ahmed", Number="22160031", College="Computer Science", Level="4", Specialization="AI", ImagePath="/images/ahmed.jpg")
+#     # db_manager.student_db.create(StudentName="Ahmed", Number="22160028", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+#     # db_manager.student_db.create(StudentName="Ahmed", Number="22160029", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+#     # db_manager.student_db.create(StudentName="Ahmed", Number="22160030", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+#     # db_manager.student_db.create(StudentName="Ahmed", Number="22160031", College="Computer Science", Level="4", Specialization="AI", ImagePath="/images/ahmed.jpg")
 
 #     # Fetch all students
 #     students = db_manager.student_db.last()
 #     print("student ",students)
 
 #     # Insert an exam
-#     db_manager.exam_db.create(Date="2024-12-05", TimeSlot="10:00 - 12:00", Period="First", Level="2", Specialization="AI", Duration="02:00:00", StudentCount=50)
+#     db_manager.exam_db.create(Date="2024-12-06", TimeSlot="10:00 - 12:00", Period="First", Level="2", Specialization="AI", Duration="02:00:00", StudentCount=50)
+#     db_manager.exam_db.create(Date="2024-12-07", TimeSlot="10:00 - 12:00", Period="First", Level="4", Specialization="CS", Duration="02:00:00", StudentCount=50)
+#     db_manager.exam_db.create(Date="2024-12-08", TimeSlot="10:00 - 12:00", Period="First", Level="3", Specialization="CS", Duration="02:00:00", StudentCount=50)
+#     db_manager.exam_db.create(Date="2024-12-09", TimeSlot="10:00 - 12:00", Period="First", Level="2", Specialization="CS", Duration="02:00:00", StudentCount=50)
+#     db_manager.exam_db.create(Date="2024-12-10", TimeSlot="10:00 - 12:00", Period="First", Level="1", Specialization="CS", Duration="02:00:00", StudentCount=50)
 
 #     # Fetch all exams
 #     exams = db_manager.exam_db.all()
