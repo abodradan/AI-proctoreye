@@ -8,10 +8,11 @@ const CompareImage = () => {
   const [similarity, setSimilarity] = useState(null);
   const [verified, setVerified] = useState(null);
   const [message, setMessage] = useState(null);
+  const [nextExamDate, setNextExamDate] = useState(null); // للتاريخ الأقرب
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [useCamera, setUseCamera] = useState(false);
-  const [comparisonType, setComparisonType] = useState("deepface"); // افتراضي هو deepface
+  const [comparisonType, setComparisonType] = useState("deepface");
 
   const fileInputRef = useRef(null);
 
@@ -33,6 +34,7 @@ const CompareImage = () => {
     setSimilarity(null);
     setVerified(null);
     setMessage(null);
+    setNextExamDate(null);
 
     const formData = new FormData();
     formData.append("registration_number", registrationNumber);
@@ -40,9 +42,9 @@ const CompareImage = () => {
 
     let apiUrl = "";
     if (comparisonType === "deepface") {
-      apiUrl = "http://127.0.0.1:8000/api/compare_image_deepface"; // API لـ DeepFace
+      apiUrl = "http://127.0.0.1:8000/api/compare_image_deepface";
     } else if (comparisonType === "image_recognition") {
-      apiUrl = "http://127.0.0.1:8000/api/compare_image_recognition"; // API لـ Image Recognition
+      apiUrl = "http://127.0.0.1:8000/api/compare_image_recognition";
     }
 
     try {
@@ -51,16 +53,14 @@ const CompareImage = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      const similarityData =
-        response.data.average_similarity || response.data.similarity;
 
-      if (typeof similarityData === "object" && similarityData !== null) {
-        setSimilarity(similarityData.threshold);
-        setVerified(similarityData.verified);
-      } else {
-        setSimilarity(similarityData);
-      }
-      setMessage(response.data.message);
+      const { status, message, similarity, verified, next_exam_date } =
+        response.data;
+
+      setMessage(message);
+      setSimilarity(similarity || null);
+      setVerified(verified || null);
+      setNextExamDate(next_exam_date || null); // حفظ التاريخ إذا كان موجودًا
     } catch (error) {
       setError("فشلت عملية مقارنة الصور");
     } finally {
@@ -141,8 +141,17 @@ const CompareImage = () => {
       </form>
 
       {message && (
-        <div className="mt-4 p-4 bg-green-100 border border-green-500 rounded">
+        <div
+          className={`mt-4 p-4 rounded ${
+            verified ? "bg-green-100" : "bg-red-100"
+          }`}
+        >
           <h3 className="text-lg font-semibold">{message}</h3>
+          {nextExamDate && (
+            <p className="text-sm text-gray-600">
+              Next Exam Date: {nextExamDate}
+            </p>
+          )}
         </div>
       )}
       {similarity !== null && (
