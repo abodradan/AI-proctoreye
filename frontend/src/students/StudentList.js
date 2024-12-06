@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
-  const [successMessage, setSuccessMessage] = useState(null); // لتخزين الرسالة مؤقتًا
+  const [successMessage, setSuccessMessage] = useState(null);
   const location = useLocation();
 
   const fetchStudents = async () => {
@@ -23,7 +23,7 @@ const StudentList = () => {
 
       // تعيين مؤقت لإخفاء الرسالة بعد 5 ثوانٍ
       const timer = setTimeout(() => {
-        setSuccessMessage(null); // إخفاء الرسالة
+        setSuccessMessage(null);
       }, 5000);
 
       return () => clearTimeout(timer);
@@ -44,20 +44,31 @@ const StudentList = () => {
       )}
 
       <h2 className="text-2xl font-bold mb-4">Student List</h2>
-      <ul className="space-y-2">
+      <ul className="space-y-4">
         {students.map((student) => (
           <li
-            key={student.registration_number}
-            className="p-2 border-b border-gray-200 flex items-center"
+            key={student.number}
+            className="p-4 border-b border-gray-200 flex items-start"
           >
             <img
-              src={student.image_url}
-              alt={student.name}
+              src={student.ImagePath}
+              alt={student.StudentName}
               className="w-16 h-16 rounded-full mr-4"
             />
             <div>
-              <p className="font-semibold">{student.name}</p>
-              <p>{student.registration_number}</p>
+              <p className="font-semibold">{student.StudentName}</p>
+              <p>
+                <strong>Number:</strong> {student.number}
+              </p>
+              <p>
+                <strong>College:</strong> {student.College}
+              </p>
+              <p>
+                <strong>Level:</strong> {student.Level}
+              </p>
+              <p>
+                <strong>Specialization:</strong> {student.Specialization}
+              </p>
             </div>
           </li>
         ))}

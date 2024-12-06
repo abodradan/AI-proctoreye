@@ -1,38 +1,40 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // استيراد useNavigate
+import { useNavigate } from "react-router-dom";
 import CameraCapture from "../components/CameraCapture";
 
 const AddStudent = () => {
-  const [registrationNumber, setRegistrationNumber] = useState("");
+  const [number, setRegistrationNumber] = useState("");
   const [name, setName] = useState("");
+  const [college, setCollege] = useState("");
+  const [level, setLevel] = useState("");
+  const [specialization, setSpecialization] = useState("");
   const [image, setImage] = useState(null);
   const [useCamera, setUseCamera] = useState(false);
-  const navigate = useNavigate(); // استخدام التنقل
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!registrationNumber || !name || !image) {
+    if (!number || !name || !college || !level || !specialization || !image) {
       alert("من فضلك قم بملء جميع الحقول");
       return;
     }
 
     const formData = new FormData();
-    formData.append("registration_number", registrationNumber);
+    formData.append("number", number);
     formData.append("name", name);
-    formData.append("image_array", image);
+    formData.append("college", college);
+    formData.append("level", level);
+    formData.append("specialization", specialization);
+    formData.append("image_file", image);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/add_student",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axios.post("http://localhost:8000/api/add_student", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       // الانتقال إلى صفحة قائمة الطلاب عند نجاح الإضافة
       navigate("/students", {
@@ -59,7 +61,7 @@ const AddStudent = () => {
         <input
           type="text"
           placeholder="Registration Number"
-          value={registrationNumber}
+          value={number}
           onChange={(e) => setRegistrationNumber(e.target.value)}
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -68,6 +70,27 @@ const AddStudent = () => {
           placeholder="Student Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <input
+          type="text"
+          placeholder="College"
+          value={college}
+          onChange={(e) => setCollege(e.target.value)}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <input
+          type="text"
+          placeholder="Level"
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <input
+          type="text"
+          placeholder="Specialization"
+          value={specialization}
+          onChange={(e) => setSpecialization(e.target.value)}
           className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
