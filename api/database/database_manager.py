@@ -1,8 +1,7 @@
 import sqlite3
-from students import Student
-from exam import Exam
-from students import Student
-from room_assignment import RoomAssignment
+from database.exam import Exam
+from database.students import Student
+from database.room_assignment import RoomAssignment
 
 class DatabaseManager:
     _instance = None
@@ -43,27 +42,27 @@ class DatabaseManager:
             self._connection = None
             print("Database connection closed")
 
-# Example usage
-if __name__ == '__main__':
-    db_manager = DatabaseManager()
-    db_manager.connect()
-    db_manager.create_tables()
+# # Example usage
+# if __name__ == '__main__':
+#     db_manager = DatabaseManager()
+#     db_manager.connect()
+#     db_manager.create_tables()
 
-    # Insert some data into the students table
-    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160028", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
-    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160029", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
-    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160030", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
-    db_manager.student_db.create(StudentName="Ahmed", SeatNumber="22160031", College="Computer Science", Level="4", Specialization="AI", ImagePath="/images/ahmed.jpg")
+#     # Insert some data into the students table
+#     db_manager.student_db.create(StudentName="Ahmed", Number="22160028", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+#     db_manager.student_db.create(StudentName="Ahmed", Number="22160029", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+#     db_manager.student_db.create(StudentName="Ahmed", Number="22160030", College="Computer Science", Level="4", Specialization="CS", ImagePath="/images/ahmed.jpg")
+#     db_manager.student_db.create(StudentName="Ahmed", Number="22160031", College="Computer Science", Level="4", Specialization="AI", ImagePath="/images/ahmed.jpg")
 
-    # Fetch all students
-    students = db_manager.student_db.all()
-    print(students)
+#     # Fetch all students
+#     students = db_manager.student_db.last()
+#     print("student ",students)
 
-    # Insert an exam
-    db_manager.exam_db.create(Date="2024-12-05", TimeSlot="10:00 - 12:00", Period="First", Level="2", Specialization="AI", Duration="02:00:00", StudentCount=50)
+#     # Insert an exam
+#     db_manager.exam_db.create(Date="2024-12-05", TimeSlot="10:00 - 12:00", Period="First", Level="2", Specialization="AI", Duration="02:00:00", StudentCount=50)
 
-    # Fetch all exams
-    exams = db_manager.exam_db.all()
-    print(exams)
+#     # Fetch all exams
+#     exams = db_manager.exam_db.all()
+#     print(exams)
 
-    db_manager.close()
+#     db_manager.close()

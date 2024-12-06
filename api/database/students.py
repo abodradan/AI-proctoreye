@@ -12,7 +12,7 @@ class Student:
         CREATE TABLE IF NOT EXISTS students (
             StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
             StudentName TEXT,
-            SeatNumber TEXT,
+            Number TEXT,
             College TEXT,
             Level TEXT,
             Specialization TEXT,
